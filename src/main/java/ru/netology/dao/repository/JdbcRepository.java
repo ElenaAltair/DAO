@@ -2,6 +2,7 @@ package ru.netology.dao.repository;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 import ru.netology.dao.model.ProductCustomer;
 
 import java.io.BufferedReader;
@@ -12,17 +13,20 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@org.springframework.stereotype.Repository
-public class Repository {
+@Repository
+public class JdbcRepository {
+
+    private String sqlString;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    public Repository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public JdbcRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        sqlString = read("myScript.sql");
     }
 
-    public List<ProductCustomer> getProductName(String name){
-        String sqlString = read("myScript.sql");
+    public List<ProductCustomer> getProductName(String name) {
+
 
         List<ProductCustomer> productCustomer = namedParameterJdbcTemplate.query(
                 sqlString,
