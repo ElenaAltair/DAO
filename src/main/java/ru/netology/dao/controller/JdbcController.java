@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 public class JdbcController {
 
-    JdbcRepository jdbcRepository;
+    private JdbcRepository jdbcRepository;
 
     public JdbcController(JdbcRepository jdbcRepository) {
         this.jdbcRepository = jdbcRepository;
