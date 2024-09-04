@@ -3,18 +3,24 @@ package ru.netology.dao.repository;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.netology.dao.model.Orders;
 import ru.netology.dao.model.ProductCustomer;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
 public class JdbcRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private String sqlString;
 
@@ -27,7 +33,17 @@ public class JdbcRepository {
 
     public List<ProductCustomer> getProductName(String name) {
 
+        List<Orders> orders = entityManager.createQuery(
+                        "select o from Orders o inner join Customers as c on c.id = o.customers.id where lower(c.name) = lower(:name)", Orders.class)
+                .setParameter("name", name)
+                .getResultList();
 
+        List<ProductCustomer> productCustomers = new ArrayList<>();
+        for (Orders order : orders) {
+            productCustomers.add(new ProductCustomer(order.getId(), order.getProduct_name(), order.getCustomers().getId(), order.getCustomers().getName()));
+        }
+
+        /*
         List<ProductCustomer> productCustomer = namedParameterJdbcTemplate.query(
                 sqlString,
                 Collections.singletonMap("name", name),
@@ -37,7 +53,9 @@ public class JdbcRepository {
                         rs.getInt("id"),
                         rs.getString("name")
                 ));
-        return productCustomer;
+        */
+
+        return productCustomers;
     }
 
     private static String read(String scriptFileName) {

@@ -1,4 +1,4 @@
 select o.id, o.product_name, c.id, c.name
-from netology.ORDERS as o
-    inner join netology.customers as c on c.id = o.customer_id
+from public.orders o
+    inner join public.customers as c on c.id = o.customers_id
     where lower(c.name) = lower(:name)
