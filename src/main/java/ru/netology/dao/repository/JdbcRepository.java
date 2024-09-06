@@ -3,6 +3,7 @@ package ru.netology.dao.repository;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
+import ru.netology.dao.model.OrdersCustomer;
 import ru.netology.dao.model.ProductCustomer;
 
 import java.io.BufferedReader;
@@ -17,17 +18,17 @@ import java.util.stream.Collectors;
 public class JdbcRepository {
 
     private String sqlString;
+    private String allOrdersSqlString;
 
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public JdbcRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         sqlString = read("myScript.sql");
+        allOrdersSqlString = read("AllOrders.sql");
     }
 
     public List<ProductCustomer> getProductName(String name) {
-
-
         List<ProductCustomer> productCustomer = namedParameterJdbcTemplate.query(
                 sqlString,
                 Collections.singletonMap("name", name),
@@ -38,6 +39,24 @@ public class JdbcRepository {
                         rs.getString("name")
                 ));
         return productCustomer;
+    }
+
+    public List<OrdersCustomer> getInfoAllOrders() {
+        List<OrdersCustomer> ordersCustomers = namedParameterJdbcTemplate.query(
+            allOrdersSqlString,
+                (rs, rowNum) -> new OrdersCustomer(
+                        rs.getInt("id"),
+                        rs.getDate("date"),
+                        rs.getString("product_name"),
+                        rs.getInt("amount"),
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getInt("age"),
+                        rs.getString("phone_number")
+                ));
+
+        return ordersCustomers;
     }
 
     private static String read(String scriptFileName) {

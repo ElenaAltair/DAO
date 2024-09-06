@@ -5,18 +5,18 @@ import java.util.Date;
 public class Orders {
     private int id;
     private Date date;
-    private int customer_id;
-    private String product_name;
+    private int customerId;
+    private String productName;
     private int amount;
 
     public Orders() {
     }
 
-    public Orders(int id, Date date, int customer_id, String product_name, int amount) {
+    public Orders(int id, Date date, int customerId, String productName, int amount) {
         this.id = id;
         this.date = date;
-        this.customer_id = customer_id;
-        this.product_name = product_name;
+        this.customerId = customerId;
+        this.productName = productName;
         this.amount = amount;
     }
 
@@ -36,20 +36,20 @@ public class Orders {
         this.date = date;
     }
 
-    public int getCustomer_id() {
-        return customer_id;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer_id(int customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getAmount() {
@@ -65,8 +65,8 @@ public class Orders {
         return "Orders{" +
                 "id=" + id +
                 ", date=" + date +
-                ", customer_id=" + customer_id +
-                ", product_name='" + product_name + '\'' +
+                ", customer_id=" + customerId +
+                ", product_name='" + productName + '\'' +
                 ", amount=" + amount +
                 '}';
     }
