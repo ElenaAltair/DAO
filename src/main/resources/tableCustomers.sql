@@ -1,0 +1,1 @@
+select * from netology.customers c order by c.id

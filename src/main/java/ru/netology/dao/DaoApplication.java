@@ -1,17 +1,17 @@
 package ru.netology.dao;
 
 import org.springframework.boot.Banner;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import ru.netology.dao.model.ProductCustomer;
-
-import java.sql.SQLException;
-import java.util.List;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 
 @SpringBootApplication
-public class DaoApplication{ // implements CommandLineRunner
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true
+)
+public class DaoApplication { // implements CommandLineRunner
 
     /*
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
